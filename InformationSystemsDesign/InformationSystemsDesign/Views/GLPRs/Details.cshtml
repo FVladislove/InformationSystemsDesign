@@ -1,0 +1,30 @@
+﻿@model InformationSystemsDesign.Models.GLPR
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>GLPR</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NmPr)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NmPr)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CdTp)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CdTp)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.CdPr">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
