@@ -15,8 +15,10 @@ namespace InformationSystemsDesign.Models
         [NotNull]
         public string NmPr { get; set; } = "";
 
-        //[Required]
+        [Required]
+        public int CdTp { get; set; }
+
         [ForeignKey("CdTp")]
-        public virtual TypePr TypePr { get; set; }
+        public virtual TypePr? TypePr { get; set; }
     }
 }
