@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
 namespace InformationSystemsDesign.Models
@@ -8,13 +9,14 @@ namespace InformationSystemsDesign.Models
         [Key]
         [Required]
         [NotNull]
-        public string CdPr { get; set; }
+        public string CdPr { get; set; } = "";
 
         [Required]
         [NotNull]
-        public string NmPr { get; set; }
+        public string NmPr { get; set; } = "";
 
-        [Required]
-        public int CdTp { get; set; }
+        //[Required]
+        [ForeignKey("CdTp")]
+        public virtual TypePr TypePr { get; set; }
     }
 }
