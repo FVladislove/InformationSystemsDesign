@@ -8,21 +8,18 @@ namespace InformationSystemsDesign.Models
     {
         [Required]
         [NotNull]
-        public string CdSb { get; set; }
+        public string CdSb { get; set; } = null!;
 
         [Required]
         [NotNull]
-        public string CdKp { get; set; }
-
-        [ForeignKey("CdSb")]
-        public virtual GLPR? GLPR_CdSb { get; set; }
-
-        [ForeignKey("CdKp")]
-        public virtual GLPR? GLPR_CdKp { get; set; }
+        public string CdKp { get; set; } = null!;
 
         [Required]
         [Range(0, int.MaxValue)]
         public int QtyKp { get; set; }
+
+        public virtual GLPR CdKpNavigation { get; set; } = null!;
+        public virtual GLPR CdSbNavigation { get; set; } = null!;
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

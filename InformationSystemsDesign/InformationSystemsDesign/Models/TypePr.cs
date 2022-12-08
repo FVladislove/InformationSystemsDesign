@@ -10,6 +10,8 @@ namespace InformationSystemsDesign.Models
 
         [Required]
         [NotNull]
-        public string NmTp { get; set; }
+        public string NmTp { get; set; } = null!;
+
+        public virtual ICollection<GLPR> GLPRs { get;} = new List<GLPR>();
     }
 }

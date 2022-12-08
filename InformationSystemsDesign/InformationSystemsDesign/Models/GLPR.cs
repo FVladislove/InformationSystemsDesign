@@ -18,7 +18,13 @@ namespace InformationSystemsDesign.Models
         [Required]
         public int CdTp { get; set; }
 
-        [ForeignKey("CdTp")]
-        public virtual TypePr? TypePr { get; set; }
+        public virtual TypePr CdTpNavigation { get; set; } = null!;
+
+        public virtual ICollection<Spec> SpecCdKpNavigations { get; set; } = new List<Spec>();
+        public virtual ICollection<Spec> SpecCdSbNavigations { get; set; } = new List<Spec>();
+
+        public virtual ICollection<StrRozv> StrRozvCdVyrNavigations { get; set; } = new List<StrRozv>();
+        public virtual ICollection<StrRozv> StrRozvCdSbNavigations { get; set; } = new List<StrRozv>();
+        public virtual ICollection<StrRozv> StrRozvCdKpNavigations { get; set; } = new List<StrRozv>();
     }
 }
