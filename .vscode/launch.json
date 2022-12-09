@@ -7,7 +7,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/InformationSystemsDesign/InformationSystemsDesign/bin/Debug/net6.0/InformationSystemsDesign.dll",
+            "program": "${workspaceFolder}/InformationSystemsDesign/InformationSystemsDesign/bin/Debug/net7.0/InformationSystemsDesign.dll",
             "args": [],
             "cwd": "${workspaceFolder}/InformationSystemsDesign/InformationSystemsDesign",
             "stopAtEntry": false,
@@ -23,7 +23,7 @@
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
+                "/Views": "${workspaceFolder}/InformationSystemsDesign/InformationSystemsDesign/Views"
             }
         },
         {
@@ -35,7 +35,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/InformationSystemsDesign/InformationSystemsDesign/bin/Debug/net6.0/InformationSystemsDesign.dll",
+            "program": "${workspaceFolder}/InformationSystemsDesign/InformationSystemsDesign/bin/Debug/net7.0/InformationSystemsDesign.dll",
             "args": [],
             "cwd": "${workspaceFolder}/InformationSystemsDesign/InformationSystemsDesign",
             "stopAtEntry": false,
