@@ -1,0 +1,65 @@
+﻿@model IEnumerable<InformationSystemsDesign.Models.StrRozv>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CdVyr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CdSb)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CdKp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QtyKp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RivNb)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RivGrf)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CdVyr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CdSb)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CdKp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QtyKp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RivNb)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RivGrf)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

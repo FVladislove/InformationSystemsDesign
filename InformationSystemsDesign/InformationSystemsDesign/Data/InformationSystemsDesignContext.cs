@@ -80,9 +80,9 @@ namespace InformationSystemsDesign.Data
             });
         }
         public DbSet<InformationSystemsDesign.Models.GLPR> GLPR { get; set; } = default!;
-        public DbSet<InformationSystemsDesign.Models.TypePr> TypePr { get; set; }
-        public DbSet<InformationSystemsDesign.Models.Spec> Spec { get; set; }
-        public DbSet<StrRozv> StrRozv { get; set; }
+        public DbSet<InformationSystemsDesign.Models.TypePr> TypePr { get; set; } = default!;
+        public DbSet<InformationSystemsDesign.Models.Spec> Spec { get; set; } = default!;
+        public DbSet<StrRozv> StrRozv { get; set; } = default!;
 
     }
 }
