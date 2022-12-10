@@ -50,7 +50,7 @@ namespace InformationSystemsDesign.Data
 
             modelBuilder.Entity<StrRozv>(entity =>
             {
-                entity.HasKey(e => new { e.CdVyr, e.CdSb, e.CdKp });
+                entity.HasKey(e => e.Id);
 
                 entity.ToTable("StrRozv");
 

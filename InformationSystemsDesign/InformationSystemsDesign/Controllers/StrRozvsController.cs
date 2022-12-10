@@ -23,8 +23,12 @@ namespace InformationSystemsDesign.Controllers
         public async Task<IActionResult> Index()
         {
             var informationSystemsDesignContext = _context.StrRozv.Include(s => s.CdKpNavigation).Include(s => s.CdSbNavigation).Include(s => s.CdVyrNavigation);
-            //return View(await informationSystemsDesignContext.ToListAsync());
-            return View(StructuralDisentanglement());
+            // Code to update table to new values
+/*            var newYable = StructuralDisentanglement();
+            _context.Database.ExecuteSqlRaw("TRUNCATE TABLE [StrRozv]");
+            _context.StrRozv.AddRange(newTable);
+            await _context.SaveChangesAsync();*/
+            return View(await informationSystemsDesignContext.ToListAsync());
         }
 
         // GET: StrRozvs/Details/5
@@ -202,9 +206,17 @@ namespace InformationSystemsDesign.Controllers
             List<Spec> specs,
             int currentNestingLevel)
         {
-            tableToAdd.Add(row);
+            tableToAdd.Add(new StrRozv()
+            {
+                CdVyr = row.CdVyr,
+                CdSb = row.CdSb,
+                CdKp = row.CdKp,
+                QtyKp = row.QtyKp,
+                RivNb = row.RivNb,
+                RivGrf = row.RivGrf
+            });
 
-            if(codesAndTypes[row.CdKp] != 2)
+            if (codesAndTypes[row.CdKp] != 2)
             {
                 return;
             }
@@ -213,7 +225,7 @@ namespace InformationSystemsDesign.Controllers
             var selectedSpecs = specs.Where(s => s.CdSb == row.CdKp).ToList();
             if (selectedSpecs.Count != 0)
             {
-                foreach(var newSpec in selectedSpecs)
+                foreach (var newSpec in selectedSpecs)
                 {
                     var newRow = new StrRozv()
                     {
