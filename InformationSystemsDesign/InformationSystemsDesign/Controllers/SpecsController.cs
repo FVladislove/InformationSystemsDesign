@@ -135,7 +135,7 @@ namespace InformationSystemsDesign.Controllers
         // GET: Specs/{CdSb, CdKp}/OverallApplicability
         public async Task<IActionResult> OverallApplicability(string CdSb, string CdKp)
         {
-             if (CdSb == null || CdKp == null || _context.Spec == null)
+            if (CdSb == null || CdKp == null || _context.Spec == null)
             {
                 return NotFound();
             }
@@ -149,9 +149,13 @@ namespace InformationSystemsDesign.Controllers
             }
 
             ViewData["SpecName"] = spec.CdKpNavigation.NmPr;
-            
-            var overallApplicabilities = await _context.StrRozv
-                .Where(s => s.CdKp == CdKp)
+
+            return View(GetOverallApplicabilities(spec));
+        }
+        private Task<List<OverallApplicability>> GetOverallApplicabilities(Spec spec)
+        {
+            return _context.StrRozv
+                .Where(s => s.CdKp == spec.CdKp)
                 .Select(s => new OverallApplicability()
                 {
                     ComponentCode = s.CdSb,
@@ -160,10 +164,21 @@ namespace InformationSystemsDesign.Controllers
                     EntryLevel = s.RivNb.ToString()
                 })
                 .ToListAsync();
-
+        }
+        // GET: Specs/GenerateOverallApplicability
+        public async Task<IActionResult> GenerateOverallApplicability()
+        {
+            var specs = await _context.Spec.ToListAsync();
+            var overallApplicabilities = new HashSet<OverallApplicability>();
+            foreach (var spec in specs)
+            {
+                foreach (var overallApplicability in await GetOverallApplicabilities(spec))
+                {
+                    overallApplicabilities.Add(overallApplicability);
+                }
+            }
             return View(overallApplicabilities);
         }
-
         // GET: Specs/Details/5
         public async Task<IActionResult> Details(string CdSb, string CdKp)
         {
