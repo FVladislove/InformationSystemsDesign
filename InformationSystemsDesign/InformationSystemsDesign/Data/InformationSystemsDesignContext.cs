@@ -24,7 +24,7 @@ namespace InformationSystemsDesign.Data
 
             entity.HasIndex(e => e.CdTp, "IX_GLPR_CdTp");
 
-            entity.HasOne(d => d.CdTpNavigation).WithMany(p => p.GLPRs).HasForeignKey(d => d.CdTp);
+            entity.HasOne(d => d.CdTpNavigation).WithMany(p => p.GLPRNavigations).HasForeignKey(d => d.CdTp);
         });
 
             modelBuilder.Entity<Spec>(entity =>
@@ -72,6 +72,22 @@ namespace InformationSystemsDesign.Data
                     .OnDelete(DeleteBehavior.NoAction);
             });
 
+            modelBuilder.Entity<SumRozv>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.ToTable("SumRozv");
+
+                entity.HasOne(d => d.CdVyrNabigation).WithMany(p => p.SumRozvCdVyrNavigations)
+                    .HasForeignKey(d => d.CdVyr)
+                    .OnDelete(DeleteBehavior.NoAction);
+                entity.HasOne(d => d.CdKpNavigation).WithMany(p => p.SumRozvCdKpNavigations)
+                    .HasForeignKey(d => d.CdKp)
+                    .OnDelete(DeleteBehavior.NoAction);
+                entity.HasOne(d => d.CdTpNavigation).WithMany(p => p.SumRozvNavigations)
+                    .HasForeignKey(d => d.CdTp)
+                    .OnDelete(DeleteBehavior.NoAction);
+            });
             modelBuilder.Entity<TypePr>(entity =>
             {
                 entity.HasKey(e => e.CdTp);

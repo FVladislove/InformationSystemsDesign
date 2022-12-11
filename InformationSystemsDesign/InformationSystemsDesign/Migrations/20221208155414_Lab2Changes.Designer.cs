@@ -125,7 +125,7 @@ namespace InformationSystemsDesign.Migrations
             modelBuilder.Entity("InformationSystemsDesign.Models.GLPR", b =>
                 {
                     b.HasOne("InformationSystemsDesign.Models.TypePr", "CdTpNavigation")
-                        .WithMany("GLPRs")
+                        .WithMany("GLPRNavigations")
                         .HasForeignKey("CdTp")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -194,7 +194,7 @@ namespace InformationSystemsDesign.Migrations
 
             modelBuilder.Entity("InformationSystemsDesign.Models.TypePr", b =>
                 {
-                    b.Navigation("GLPRs");
+                    b.Navigation("GLPRNavigations");
                 });
 #pragma warning restore 612, 618
         }

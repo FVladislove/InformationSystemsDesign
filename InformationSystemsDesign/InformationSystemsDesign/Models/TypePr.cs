@@ -12,6 +12,7 @@ namespace InformationSystemsDesign.Models
         [NotNull]
         public string NmTp { get; set; } = null!;
 
-        public virtual ICollection<GLPR> GLPRs { get;} = new List<GLPR>();
+        public virtual ICollection<GLPR> GLPRNavigations { get;} = new List<GLPR>();
+        public virtual ICollection<SumRozv> SumRozvNavigations { get; set; } = new List<SumRozv>();
     }
 }

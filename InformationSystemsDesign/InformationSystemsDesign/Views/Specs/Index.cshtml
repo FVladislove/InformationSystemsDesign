@@ -1,0 +1,58 @@
+﻿@model IEnumerable<InformationSystemsDesign.Models.Spec>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.QtyKp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CdKpNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CdSbNavigation)
+            </th>
+            <th>Direct Applicability</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QtyKp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CdKpNavigation.CdPr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CdSbNavigation.CdPr)
+                </td>
+                <td>
+                    @Html.ActionLink("Direct Applicability", "DirectApplicability", new { item.CdSb, item.CdKp })
+                </td>
+                <td>
+                    @Html.ActionLink("Structural Applicability", "StructuralApplicability", new { item.CdSb, item.CdKp })
+                </td>
+                <td>
+                    @Html.ActionLink("Overall Applicability", "OverallApplicability", new { item.CdSb, item.CdKp })
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { item.CdSb, item.CdKp }) |
+                    @Html.ActionLink("Details", "Details", new { item.CdSb, item.CdKp }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
