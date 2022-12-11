@@ -1,0 +1,41 @@
+﻿@using InformationSystemsDesign.Models.ViewModels
+@model IEnumerable<DirectApplicability>
+
+@{
+    ViewData["Title"] = "Direct Applicability";
+}
+<h2>
+    @ViewData["SpecName"]
+</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ComponentCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComponentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quanity)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ComponentCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ComponentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quanity)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
