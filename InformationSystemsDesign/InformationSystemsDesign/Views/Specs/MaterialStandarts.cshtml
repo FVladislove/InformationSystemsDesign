@@ -1,0 +1,43 @@
+@using InformationSystemsDesign.Models.ViewModels
+@model IEnumerable<MaterialStandart>
+
+@{
+    ViewData["Title"] = "Material Standarts";
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaterialCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GeneralNeedForMaterial)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StaffName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaterialCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GeneralNeedForMaterial)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

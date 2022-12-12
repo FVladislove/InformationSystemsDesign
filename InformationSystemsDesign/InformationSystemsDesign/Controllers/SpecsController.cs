@@ -165,6 +165,7 @@ namespace InformationSystemsDesign.Controllers
                 })
                 .ToListAsync();
         }
+
         // GET: Specs/GenerateOverallApplicability
         public async Task<IActionResult> GenerateOverallApplicability()
         {
@@ -178,6 +179,48 @@ namespace InformationSystemsDesign.Controllers
                 }
             }
             return View(overallApplicabilities);
+        }
+
+        // GET: Specs/MaterialStandarts
+        public async Task<IActionResult> MaterialStandarts()
+        {
+            var requiredValuesFromSumRozv = _context.SumRozv
+                .Where(sumRozv => sumRozv.CdTp == 3)
+                .Select(sumRozv => new
+                {
+                    sumRozv.CdVyr,
+                    sumRozv.CdVyrNavigation.NmPr,
+                    sumRozv.CdKp,
+                    sumRozv.SumKp
+                });
+
+            var combinedTablesSumRozvAndZastMt = requiredValuesFromSumRozv
+                .Join(
+                    _context.ZastMt,
+                    sumRozv => sumRozv.CdKp,
+                    zastMt => zastMt.CdKp,
+                    (sumRozv, zastMt) => new
+                    {
+                        sumRozv.CdVyr,
+                        sumRozv.NmPr,
+                        zastMt.CdMtNavigation.CdMt,
+                        sumRozv.SumKp,
+                        zastMt.QtyMt
+                    });
+
+            var materialStandarts = await combinedTablesSumRozvAndZastMt
+                .GroupBy(ms => new { ms.CdVyr, ms.CdMt })
+                .Select(materialStandart => new MaterialStandart
+                {
+                    ProductCode = materialStandart.Key.CdVyr,
+                    StaffName = materialStandart.Max(ms => ms.NmPr),
+                    MaterialCode = materialStandart.Key.CdMt,
+                    GeneralNeedForMaterial = materialStandart
+                        .Sum(ms => ms.QtyMt * ms.SumKp)
+                })
+                .ToListAsync();
+
+            return View(materialStandarts);
         }
         // GET: Specs/Details/5
         public async Task<IActionResult> Details(string CdSb, string CdKp)
