@@ -30,7 +30,7 @@ namespace InformationSystemsDesign.Models
         [NotNull]
         public int CdTp { get; set; }
 
-        public virtual GLPR CdVyrNabigation { get; set; } = null!;
+        public virtual GLPR CdVyrNavigation { get; set; } = null!;
         public virtual GLPR CdKpNavigation { get; set; } = null!;
         public virtual TypePr CdTpNavigation { get; set; } = null!;
     }

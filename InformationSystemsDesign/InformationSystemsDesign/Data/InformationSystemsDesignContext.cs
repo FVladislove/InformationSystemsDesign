@@ -87,7 +87,7 @@ namespace InformationSystemsDesign.Data
 
                 entity.ToTable("SumRozv");
 
-                entity.HasOne(d => d.CdVyrNabigation).WithMany(p => p.SumRozvCdVyrNavigations)
+                entity.HasOne(d => d.CdVyrNavigation).WithMany(p => p.SumRozvCdVyrNavigations)
                     .HasForeignKey(d => d.CdVyr)
                     .OnDelete(DeleteBehavior.NoAction);
                 entity.HasOne(d => d.CdKpNavigation).WithMany(p => p.SumRozvCdKpNavigations)
