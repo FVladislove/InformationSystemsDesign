@@ -12,6 +12,10 @@
 
         public override bool Equals(object? obj)
         {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
             if (!(obj is OverallApplicability))
             {
                 return false;
@@ -22,19 +26,15 @@
 
         public bool Equals(OverallApplicability other)
         {
-            if (ComponentCode == other.ComponentCode
+            return ComponentCode == other.ComponentCode
                 && ComponentName == other.ComponentName
                 && Quanity == other.Quanity
-                && EntryLevel == other.EntryLevel)
-            {
-                return true;
-            }
-            return false;
+                && EntryLevel == other.EntryLevel;
         }
 
         public override int GetHashCode()
         {
-            return Tuple.Create(ComponentCode, ComponentName, Quanity, EntryLevel).GetHashCode();
+            return HashCode.Combine(ComponentCode, ComponentName, Quanity, EntryLevel);
         }
     }
 }
