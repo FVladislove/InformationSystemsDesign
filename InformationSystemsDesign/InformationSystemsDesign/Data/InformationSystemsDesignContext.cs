@@ -10,22 +10,31 @@ namespace InformationSystemsDesign.Data
 {
     public class InformationSystemsDesignContext : DbContext
     {
+        public DbSet<GLPR> GLPR { get; set; } = default!;
+        public DbSet<TypePr> TypePr { get; set; } = default!;
+        public DbSet<Spec> Spec { get; set; } = default!;
+        public DbSet<StrRozv> StrRozv { get; set; } = default!;
+        public DbSet<SumRozv> SumRozv { get; set; } = default!;
+        public DbSet<ZastMt> ZastMt { get; set; } = default!;
+        public DbSet<DovMt> DovMt { get; set; } = default!;
+
         public InformationSystemsDesignContext(DbContextOptions<InformationSystemsDesignContext> options)
             : base(options)
         {
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<GLPR>(entity =>
-        {
-            entity.HasKey(e => e.CdPr);
+            {
+                entity.HasKey(e => e.CdPr);
 
-            entity.ToTable("GLPR");
+                entity.ToTable("GLPR");
 
-            entity.HasIndex(e => e.CdTp, "IX_GLPR_CdTp");
+                entity.HasIndex(e => e.CdTp, "IX_GLPR_CdTp");
 
-            entity.HasOne(d => d.CdTpNavigation).WithMany(p => p.GLPRNavigations).HasForeignKey(d => d.CdTp);
-        });
+                entity.HasOne(d => d.CdTpNavigation).WithMany(p => p.GLPRNavigations).HasForeignKey(d => d.CdTp);
+            });
 
             modelBuilder.Entity<Spec>(entity =>
             {
@@ -88,17 +97,34 @@ namespace InformationSystemsDesign.Data
                     .HasForeignKey(d => d.CdTp)
                     .OnDelete(DeleteBehavior.NoAction);
             });
+
             modelBuilder.Entity<TypePr>(entity =>
             {
                 entity.HasKey(e => e.CdTp);
 
                 entity.ToTable("TypePr");
             });
-        }
-        public DbSet<InformationSystemsDesign.Models.GLPR> GLPR { get; set; } = default!;
-        public DbSet<InformationSystemsDesign.Models.TypePr> TypePr { get; set; } = default!;
-        public DbSet<InformationSystemsDesign.Models.Spec> Spec { get; set; } = default!;
-        public DbSet<StrRozv> StrRozv { get; set; } = default!;
 
+            modelBuilder.Entity<ZastMt>(entity =>
+            {
+                entity.HasKey(e => new { e.CdKp, e.CdMt });
+
+                entity.ToTable("ZastMt");
+
+                entity.HasOne(d => d.CdKpNavigation).WithMany(p => p.ZastMtCdKpNavigations)
+                    .HasForeignKey(d => d.CdKp)
+                    .OnDelete(DeleteBehavior.NoAction);
+                entity.HasOne(d => d.CdMtNavigation).WithMany(p => p.ZastMtCdMtNavigations)
+                    .HasForeignKey(d => d.CdMt)
+                    .OnDelete(DeleteBehavior.NoAction);
+            });
+
+            modelBuilder.Entity<DovMt>(entity =>
+            {
+                entity.HasKey(e => e.CdMt);
+
+                entity.ToTable("DovMt");
+            });
+        }
     }
 }

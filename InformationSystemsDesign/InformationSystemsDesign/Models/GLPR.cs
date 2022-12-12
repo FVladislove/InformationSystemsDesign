@@ -29,5 +29,7 @@ namespace InformationSystemsDesign.Models
 
         public virtual ICollection<SumRozv> SumRozvCdVyrNavigations { get; set;} = new List<SumRozv>();
         public virtual ICollection<SumRozv> SumRozvCdKpNavigations { get; set;} = new List<SumRozv>();
+
+        public virtual ICollection<ZastMt> ZastMtCdKpNavigations { get; set; } = new List<ZastMt>();
     }
 }
