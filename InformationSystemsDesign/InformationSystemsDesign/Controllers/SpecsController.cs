@@ -66,7 +66,8 @@ namespace InformationSystemsDesign.Controllers
                     reqVal.CdVyr,
                     ptrn.CdTO,
                     ptrn.CdTONavigation.NmTO,
-                    ptrn.Godin
+                    ptrn.Godin,
+                    reqVal.SumKp
                 });
             
             var techNorms = joinedSumRozvAndPTRN
@@ -76,7 +77,7 @@ namespace InformationSystemsDesign.Controllers
                     CdVyr = techNorm.Key.CdVyr,
                     CdTO = techNorm.Key.CdTO,
                     NmTO = techNorm.Key.NmTO,
-                    SumGodin = techNorm.Sum(tn => tn.Godin)
+                    SumGodin = techNorm.Sum(tn => tn.Godin * tn.SumKp)
                 })
                 .ToList();
             return View(techNorms);
