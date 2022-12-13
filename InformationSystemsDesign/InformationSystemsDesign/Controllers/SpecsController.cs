@@ -26,13 +26,39 @@ namespace InformationSystemsDesign.Controllers
             var informationSystemsDesignContext = _context.Spec.Include(s => s.CdKpNavigation).Include(s => s.CdSbNavigation);
             return View(await informationSystemsDesignContext.ToListAsync());
         }
-
+        // GET: Specs/WorkerNorm
+        public async Task<IActionResult> WorkerNorm()
+        {
+            var workerNorms = await _context.TechNorm
+                .Join(
+                    _context.TO_PF.Include(t => t.CdPfNavigations),
+                    techNorm => techNorm.CdTO,
+                    to => to.CdTO,
+                    (techNorm, to) => new
+                    {
+                        techNorm.CdVyr,
+                        to.CdPf,
+                        to.CdPfNavigations.NmPf,
+                        techNorm.SumGodin
+                    }
+                )
+                .GroupBy(workerNorm => new { workerNorm.CdVyr, workerNorm.CdPf })
+                .Select(workerNorm => new WorkerNorm
+                {
+                    CdVyr = workerNorm.Key.CdVyr,
+                    CdPf = workerNorm.Key.CdPf,
+                    NmPf = workerNorm.Max(wn => wn.NmPf)!,
+                    TotalGod = workerNorm.Sum(wn => wn.SumGodin)
+                })
+                .ToListAsync();
+            return View(workerNorms);
+        }
         // GET: Specs/TechnologicalStandards
         public async Task<IActionResult> TechnologicalStandards()
         {
-/*            var techNorms = await GetTechnNormsAsync();
-            await _context.AddRangeAsync(techNorms);
-            await _context.SaveChangesAsync();*/
+            /*            var techNorms = await GetTechnNormsAsync();
+                        await _context.AddRangeAsync(techNorms);
+                        await _context.SaveChangesAsync();*/
             return View(await _context.TechNorm.ToListAsync());
         }
 

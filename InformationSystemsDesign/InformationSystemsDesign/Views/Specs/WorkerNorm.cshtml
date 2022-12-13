@@ -1,0 +1,45 @@
+@using InformationSystemsDesign.Models.ViewModels
+@model IEnumerable<WorkerNorm>
+
+@{
+    ViewData["Title"] = "Worker Norm";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CdVyr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CdPf)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NmPf)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalGod)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CdVyr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CdPf)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NmPf)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalGod)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
