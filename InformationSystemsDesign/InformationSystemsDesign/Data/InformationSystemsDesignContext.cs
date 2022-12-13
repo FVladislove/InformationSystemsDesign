@@ -125,6 +125,34 @@ namespace InformationSystemsDesign.Data
 
                 entity.ToTable("DovMt");
             });
+
+            modelBuilder.Entity<DovTO>(entity =>
+            {
+                entity.HasKey(e => e.CdTO);
+
+                entity.ToTable("DovTO");
+            });
+
+            modelBuilder.Entity<PTRN>(entity =>
+            {
+                entity.HasKey(e => new { e.CdPr, e.CdTO });
+
+                entity.ToTable("PTRN");
+
+                entity.HasOne(d => d.CdPrNavigation).WithMany(p => p.PTRNCdPrNavigations)
+                    .HasForeignKey(d => d.CdPr)
+                    .OnDelete(DeleteBehavior.NoAction);
+                entity.HasOne(d => d.CdTONavigation).WithMany(p => p.PTRNCdTONavigations)
+                    .HasForeignKey(d => d.CdTO)
+                    .OnDelete(DeleteBehavior.NoAction);
+            });
+
+            modelBuilder.Entity<TechnNorm>(entity =>
+            {
+                entity.HasKey(e => new { e.CdVyr, e.CdTO });
+
+                entity.ToTable("TechNorm");
+            });
         }
     }
 }
