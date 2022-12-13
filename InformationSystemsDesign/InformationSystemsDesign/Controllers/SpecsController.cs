@@ -27,6 +27,61 @@ namespace InformationSystemsDesign.Controllers
             return View(await informationSystemsDesignContext.ToListAsync());
         }
 
+        // GET: Specs/TechnologicalStandards
+        public async Task<IActionResult> TechnologicalStandards()
+        {
+            var requiredValuesFromSumRozv = await _context.SumRozv
+                .Include(s => s.CdKpNavigation)
+                .Where(s => s.CdKpNavigation.CdTp == 2 || s.CdKpNavigation.CdTp == 3)
+                .ToListAsync();
+
+            var products = await _context.GLPR
+                .Where(g => g.CdTp == 1)
+                .ToListAsync();
+
+            foreach (var product in products)
+            {
+                requiredValuesFromSumRozv.Add(new SumRozv
+                {
+                    CdVyr = product.CdPr,
+                    CdKp = product.CdPr,
+                    SumKp = 1,
+                    MinRv = 0,
+                    CdTp = 1
+                });
+            }
+
+            requiredValuesFromSumRozv = requiredValuesFromSumRozv
+                .OrderBy(r => r.CdVyr)
+                .ThenBy(r => r.CdTp)
+                .ToList();
+
+            var joinedSumRozvAndPTRN = requiredValuesFromSumRozv
+                .Join(_context.PTRN
+                    .Include(ptrn => ptrn.CdTONavigation),
+                reqVal => reqVal.CdKp,
+                ptrn => ptrn.CdPr,
+                (reqVal, ptrn) => new
+                {
+                    reqVal.CdVyr,
+                    ptrn.CdTO,
+                    ptrn.CdTONavigation.NmTO,
+                    ptrn.Godin
+                });
+            
+            var techNorms = joinedSumRozvAndPTRN
+                .GroupBy(techNorm => new { techNorm.CdVyr, techNorm.CdTO, techNorm.NmTO })
+                .Select(techNorm => new TechnNorm
+                {
+                    CdVyr = techNorm.Key.CdVyr,
+                    CdTO = techNorm.Key.CdTO,
+                    NmTO = techNorm.Key.NmTO,
+                    SumGodin = techNorm.Sum(tn => tn.Godin)
+                })
+                .ToList();
+            return View(techNorms);
+        }
+
         // GET: Specs/{CdSb, CdKp}/DirectApplicability
         public async Task<IActionResult> DirectApplicability(string CdSb, string CdKp)
         {
@@ -150,9 +205,9 @@ namespace InformationSystemsDesign.Controllers
 
             ViewData["SpecName"] = spec.CdKpNavigation.NmPr;
 
-            return View(GetOverallApplicabilities(spec));
+            return View(GetOverallApplicabilitiesForSpec(spec));
         }
-        private Task<List<OverallApplicability>> GetOverallApplicabilities(Spec spec)
+        private Task<List<OverallApplicability>> GetOverallApplicabilitiesForSpec(Spec spec)
         {
             return _context.StrRozv
                 .Where(s => s.CdKp == spec.CdKp)
@@ -169,20 +224,24 @@ namespace InformationSystemsDesign.Controllers
         // GET: Specs/GenerateOverallApplicability
         public async Task<IActionResult> GenerateOverallApplicability()
         {
+            return View(await GetOverallApplicabilities());
+        }
+
+        public async Task<ICollection<OverallApplicability>> GetOverallApplicabilities()
+        {
             var specs = await _context.Spec.ToListAsync();
             var overallApplicabilities = new HashSet<OverallApplicability>();
             foreach (var spec in specs)
             {
-                foreach (var overallApplicability in await GetOverallApplicabilities(spec))
+                foreach (var overallApplicability in await GetOverallApplicabilitiesForSpec(spec))
                 {
                     overallApplicabilities.Add(overallApplicability);
                 }
             }
-            return View(overallApplicabilities);
+            return overallApplicabilities;
         }
-
-        // GET: Specs/MaterialStandarts
-        public async Task<IActionResult> MaterialStandarts()
+        // GET: Specs/MaterialStandards
+        public async Task<IActionResult> MaterialStandards()
         {
             var requiredValuesFromSumRozv = _context.SumRozv
                 .Where(sumRozv => sumRozv.CdTp == 3)
@@ -208,19 +267,19 @@ namespace InformationSystemsDesign.Controllers
                         zastMt.QtyMt
                     });
 
-            var materialStandarts = await combinedTablesSumRozvAndZastMt
+            var materialStandards = await combinedTablesSumRozvAndZastMt
                 .GroupBy(ms => new { ms.CdVyr, ms.CdMt })
-                .Select(materialStandart => new MaterialStandart
+                .Select(materialStandard => new MaterialStandard
                 {
-                    ProductCode = materialStandart.Key.CdVyr,
-                    StaffName = materialStandart.Max(ms => ms.NmPr),
-                    MaterialCode = materialStandart.Key.CdMt,
-                    GeneralNeedForMaterial = materialStandart
+                    ProductCode = materialStandard.Key.CdVyr,
+                    StaffName = materialStandard.Max(ms => ms.NmPr)!,
+                    MaterialCode = materialStandard.Key.CdMt,
+                    GeneralNeedForMaterial = materialStandard
                         .Sum(ms => ms.QtyMt * ms.SumKp)
                 })
                 .ToListAsync();
 
-            return View(materialStandarts);
+            return View(materialStandards);
         }
         // GET: Specs/Details/5
         public async Task<IActionResult> Details(string CdSb, string CdKp)

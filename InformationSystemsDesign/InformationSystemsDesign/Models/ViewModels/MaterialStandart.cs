@@ -2,7 +2,7 @@
 
 namespace InformationSystemsDesign.Models.ViewModels
 {
-    public class MaterialStandart
+    public class MaterialStandard
     {
         [DisplayName("CdVyr")]
         public string ProductCode { get; set; } = null!;

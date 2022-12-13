@@ -1,0 +1,43 @@
+@model IEnumerable<TechnNorm>
+
+@{
+    ViewData["Title"] = "Technological Standards";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CdVyr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CdTO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NmTO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SumGodin)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CdVyr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CdTO)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NmTO)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SumGodin)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
