@@ -30,6 +30,14 @@ namespace InformationSystemsDesign.Controllers
         // GET: Specs/TechnologicalStandards
         public async Task<IActionResult> TechnologicalStandards()
         {
+/*            var techNorms = await GetTechnNormsAsync();
+            await _context.AddRangeAsync(techNorms);
+            await _context.SaveChangesAsync();*/
+            return View(await _context.TechNorm.ToListAsync());
+        }
+
+        public async Task<ICollection<TechnNorm>> GetTechnNormsAsync()
+        {
             var requiredValuesFromSumRozv = await _context.SumRozv
                 .Include(s => s.CdKpNavigation)
                 .Where(s => s.CdKpNavigation.CdTp == 2 || s.CdKpNavigation.CdTp == 3)
@@ -69,7 +77,7 @@ namespace InformationSystemsDesign.Controllers
                     ptrn.Godin,
                     reqVal.SumKp
                 });
-            
+
             var techNorms = joinedSumRozvAndPTRN
                 .GroupBy(techNorm => new { techNorm.CdVyr, techNorm.CdTO, techNorm.NmTO })
                 .Select(techNorm => new TechnNorm
@@ -80,9 +88,9 @@ namespace InformationSystemsDesign.Controllers
                     SumGodin = techNorm.Sum(tn => tn.Godin * tn.SumKp)
                 })
                 .ToList();
-            return View(techNorms);
-        }
 
+            return techNorms;
+        }
         // GET: Specs/{CdSb, CdKp}/DirectApplicability
         public async Task<IActionResult> DirectApplicability(string CdSb, string CdKp)
         {
