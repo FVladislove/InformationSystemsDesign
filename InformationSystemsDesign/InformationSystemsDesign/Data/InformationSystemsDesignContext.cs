@@ -20,7 +20,9 @@ namespace InformationSystemsDesign.Data
         public DbSet<DovTO> DovTO { get; set; } = default!;
         public DbSet<PTRN> PTRN { get; set; } = default!;
         public DbSet<TechnNorm> TechNorm { get; set; } = default!;
-        
+        public DbSet<TO_PF> TO_PF { get; set; } = default!;
+        public DbSet<DovPrf> DovPrf { get; set; } = default!;
+
         public InformationSystemsDesignContext(DbContextOptions<InformationSystemsDesignContext> options)
             : base(options)
         {
@@ -155,6 +157,27 @@ namespace InformationSystemsDesign.Data
                 entity.HasKey(e => new { e.CdVyr, e.CdTO });
 
                 entity.ToTable("TechNorm");
+            });
+
+            modelBuilder.Entity<DovPrf>(entity =>
+            {
+                entity.HasKey(e => e.CdPf);
+
+                entity.ToTable("DovPrf");
+            });
+
+            modelBuilder.Entity<TO_PF>(entity =>
+            {
+                entity.HasKey(e => new { e.CdTO, e.CdPf });
+
+                entity.ToTable("TO_PF");
+
+                entity.HasOne(d => d.CdTONAvigation).WithMany(p => p.TO_PFCdTONavigations)
+                    .HasForeignKey(d => d.CdTO)
+                    .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(d => d.CdPfNavigations).WithMany(p => p.TO_PFCdPfNavigations)
+                    .HasForeignKey(d => d.CdPf)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }

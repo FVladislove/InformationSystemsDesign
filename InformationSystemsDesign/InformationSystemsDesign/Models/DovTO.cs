@@ -14,5 +14,7 @@ namespace InformationSystemsDesign.Models
         public string NmTO { get; set; } = null!;
 
         public virtual ICollection<PTRN> PTRNCdTONavigations { get; set; } = new List<PTRN>();
+
+        public virtual ICollection<TO_PF> TO_PFCdTONavigations { get; set; } = new List<TO_PF>();
     }
 }

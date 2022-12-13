@@ -3,6 +3,7 @@ using InformationSystemsDesign.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InformationSystemsDesign.Migrations
 {
     [DbContext(typeof(InformationSystemsDesignContext))]
-    partial class InformationSystemsDesignContextModelSnapshot : ModelSnapshot
+    [Migration("20221213052638_Add_DorPrf_and_TO_PF")]
+    partial class AddDorPrfandTOPF
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
