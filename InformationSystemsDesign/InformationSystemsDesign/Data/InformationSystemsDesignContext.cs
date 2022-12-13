@@ -17,7 +17,10 @@ namespace InformationSystemsDesign.Data
         public DbSet<SumRozv> SumRozv { get; set; } = default!;
         public DbSet<ZastMt> ZastMt { get; set; } = default!;
         public DbSet<DovMt> DovMt { get; set; } = default!;
-
+        public DbSet<DovTO> DovTO { get; set; } = default!;
+        public DbSet<PTRN> PTRN { get; set; } = default!;
+        public DbSet<TechnNorm> TechNorm { get; set; } = default!;
+        
         public InformationSystemsDesignContext(DbContextOptions<InformationSystemsDesignContext> options)
             : base(options)
         {
